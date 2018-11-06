@@ -1,3 +1,5 @@
+import { provider } from '../../config/FireBaseConfig'
+
 export const signIn = (credentials) => {
     return (dispatch, getState, {getFirebase}) => {
       const firebase = getFirebase();
@@ -42,6 +44,29 @@ export const signUp = (newUser) => {
       dispatch({type: 'SIGNUP_SUCCESS'});
     }).catch((err) => {
       dispatch({type: 'SIGNUP_ERROR', err});
+    })
+  }
+}
+
+export const loginWithGoogle = () => {
+  return (dispatch, getState, {getFirebase, getFirestore}) => {
+    const firebase = getFirebase();
+    const firestore = getFirestore();
+
+    firebase.auth().signInWithPopup(provider).then(res => {
+      dispatch({ type: 'LOGIN_SUCCESS' })
+      const user = res.user;
+      firestore.collection('users').doc(res.user.uid).set({
+        display_name: user.displayName,
+        username: user.displayName,
+        photoURL: user.photoURL,
+        email: user.email,
+        phoneNumber: user.phoneNumber,
+        status: 'offline',
+        UID: user.uid
+      })
+    }).catch(err => {
+      dispatch({ type: 'LOGIN_ERROR', err });
     })
   }
 }
