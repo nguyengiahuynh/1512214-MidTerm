@@ -44,7 +44,6 @@ class ListPeople extends Component {
   }
 
   render() {
-    console.log(this.props)
     return (
         <div className="people-list" id="people-list">
           <div className="search">
