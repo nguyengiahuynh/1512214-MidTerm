@@ -16,12 +16,11 @@ class User extends Component {
   constructor(props){
     super(props)
     this.state = {
-      active: false
+      active: true
     }
   }
 
   render() {
-    console.log(this.props);
     const {user} = this.props
     return (
       <div>
@@ -47,7 +46,7 @@ class User extends Component {
 
 const mapDispatchToProps = (dispatch) => {
     return{
-      updateUserChatInfo: (data) => dispatch(updateUserChatInfo(data))
+      //updateUserChatInfo: (data) => dispatch(updateUserChatInfo(data))
     }
   }
   

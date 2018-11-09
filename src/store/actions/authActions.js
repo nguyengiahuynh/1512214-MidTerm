@@ -80,7 +80,6 @@ import { provider } from '../../config/FireBaseConfig'
       const firestore = getFirestore();
       
       let uid = firebase.auth().O;
-      console.log(uid);
       firestore.update({collection: 'users', doc: uid}, {status: "online"}).then(() => {
         dispatch({type: 'UPDATE_STATUS_SUCCESS'});
       }).catch((err) => {

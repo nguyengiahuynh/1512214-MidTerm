@@ -23,8 +23,7 @@ const mapStateToProps = (state) => {
   if (arr) {
     arr = Object.entries(arr);
     //console.log(arr[0][1].UID);
-    for (let i = 0; i < arr.length; i++)
-    {
+    for (let i = 0; i < arr.length; i++) {
       if (arr[i][1].UID != currentPeople.uid)
         listPeople.push(arr[i][1]);
     }

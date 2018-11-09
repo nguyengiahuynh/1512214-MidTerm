@@ -4,10 +4,10 @@ const initialState = {
 
 const chatReducer =  (state = initialState, action) => {
   switch(action.type){
-    case 'INFO_CHAT_USER':
+    case 'INFO_USER_CHAT_WITH':
       return{
         ...state,
-        infoUser: action.info
+        infoUser: action.data
       }
     default:
       return state

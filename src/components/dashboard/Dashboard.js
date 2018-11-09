@@ -11,7 +11,9 @@ import { updateStatusPeople } from '../../store/actions/authActions'
 
 class Dashboard extends Component {
     componentDidMount() {
-        this.props.updateStatusPeople()
+        const { projects, auth } = this.props;
+        if (auth.uid)
+            this.props.updateStatusPeople()
     }
 
     render() {
@@ -43,6 +45,7 @@ const mapDispatchToProps = (dispatch) => {
 export default compose(
     connect(mapStateToProps, mapDispatchToProps),
     firestoreConnect([
-        'users'
+        'users',
+        'chat'
     ])
 )(Dashboard)

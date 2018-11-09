@@ -4,6 +4,10 @@
   box-sizing: border-box;
 }
 
+.active {
+  background: #f2fb7d;
+}
+
 body {
   background: #C5DDEB;
   font: 14px/20px "Lato", Arial, sans-serif;
