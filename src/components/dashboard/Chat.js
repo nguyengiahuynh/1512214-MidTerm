@@ -36,7 +36,7 @@ class Chat extends Component {
   }
 
   handleTypeContents = (e) => {
-    if (e.key === 'Enter' && !e.altKey && this.props.match.params && this.props.match.params.id) {
+    if (this.props.match.params && this.props.match.params.id && e.key === 'Enter') {
       e.preventDefault();
       let temp = e.target.value
       e.target.value = ""
@@ -44,17 +44,18 @@ class Chat extends Component {
         content: temp
       }, () => {
         this.handleSend()
+        this.setState({
+          content: ""
+        })
       })
-    } else if (e.key === 'Enter' && !e.altKey && this.props.match && !this.props.match.params.id){
+    } else if (this.props.match && !this.props.match.params.id && e.key === 'Enter') {
       e.preventDefault();
       e.target.value = ""
-    }
-    else if(e.key === 'Enter' && e.altKey){
-      e.target.value += "\n"
     }
   }
 
   handleSend = (e) => {
+    console.log(e)
     if (this.props.match.params) {
       this.props.sendContents({
         contents: this.props.Chat.contents,
@@ -72,11 +73,11 @@ class Chat extends Component {
     const { Chat } = this.props
     const { userChatWith } = this.props
     const uid = profile.UID
-    const display_name = profile.display_name ? profile.display_name : profile.displayName
     return (
       
         <div className="chat">
-            {userChatWith && 
+            <div>
+            {userChatWith ?
                 <div className="chat-header clearfix">
                   <div className="logo">
                     <img width="55" src={userChatWith.photoURL} alt="logo" />
@@ -86,7 +87,10 @@ class Chat extends Component {
                   </div>
                   <i className="fa fa-star"></i>
                 </div>
+                :
+                <div className="chat-header clearfix"></div>
             }
+            </div>
           {/* end chat-header */}
           <div className="chat-history" id="box-chat">
             <ul>
@@ -181,12 +185,22 @@ class Chat extends Component {
             
           </div> */}
           {/* end chat-history */}
-          <div className="chat-message clearfix">
-            <form>
-              <textarea name="message-to-send" id="message-to-send" placeholder="Type message!!" rows={3}
-                defaultValue="" onKeyPress={this.handleTypeContents} />
-                <button type="button" onClick={this.handleSend}>Send</button>
-            </form>
+          <div>
+            {userChatWith ? 
+              <div className="chat-message clearfix">
+                <form>
+                  <textarea name="message-to-send" id="message-to-send" placeholder="Type message!!" rows={3}
+                    defaultValue="" onKeyPress={this.handleTypeContents} />
+                  <button type="button" onClick={this.handleSend}>Send</button>
+                </form>
+              </div> :
+              <div className="chat-message clearfix">
+                <form>
+                  <textarea name="message-to-send" id="message-to-send"  placeholder="Chose someone in list to chat with them!!" rows={3} readOnly></textarea>
+                  <button type="button">Send</button>
+                </form>
+              </div>
+            }
           </div>
           {/* end chat-message */}
         </div>
