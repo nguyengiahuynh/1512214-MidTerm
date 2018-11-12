@@ -5,7 +5,7 @@
 }
 
 .active {
-  background: #f2fb7d;
+  background: #dad9d9;
 }
 
 body {
@@ -63,7 +63,7 @@ body {
   padding-left: 8px;
 }
 .people-list .status {
-  color: #92959e;
+  color: #ffffff;
 }
 .chat {
   width: 490px;

@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@version/react-router-v3": "^1.0.0",
+    "date-and-time": "^0.6.3",
     "date-fns": "^2.0.0-alpha.25",
     "firebase": "^5.5.6",
     "history": "^4.7.2",

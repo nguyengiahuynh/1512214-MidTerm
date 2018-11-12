@@ -9,7 +9,9 @@ import { createIDChat } from '../../functions/'
       let uid = firebase.auth().O
       if(data.content) {
         let IDChat = createIDChat(uid, data.userChatWith);
-        let arr = data.contents;
+        let arr = []
+        if (data.contents)
+          arr = data.contents
         let date = new Date();
         arr.push({
           uid: uid,
@@ -22,7 +24,7 @@ import { createIDChat } from '../../functions/'
         }).then((res) => {
           if (res.docs.length) {
             let id = res.docs[0].id;
-            firestore.update({collection: 'chat', doc: id}, {contents: arr});
+            firestore.update({collection: 'chat', doc: id}, {contents: arr, lastChatTime: date.toString()});
           }
           else {
             firestore.collection('chat').doc(IDChat).set({

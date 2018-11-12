@@ -6,7 +6,6 @@ import { Redirect } from 'react-router-dom'
 import '../../css/Dashboard.css'
 import Chat from './Chat'
 import ListPeople from './ListPeople'
-import firebase from '../../config/FireBaseConfig'
 import { updateStatusPeople } from '../../store/actions/authActions'
 
 class Dashboard extends Component {
