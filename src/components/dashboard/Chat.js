@@ -8,6 +8,7 @@ import { createIDChat } from '../../functions'
 import {compose} from 'redux'
 import _ from 'lodash'
 import { Redirect } from 'react-router-dom'
+import format from 'date-fns/format'
 
 class Chat extends Component {
 
@@ -103,15 +104,15 @@ class Chat extends Component {
                       <div className={uid === item.uid ? "message-data align-right" : "message-data"}>
                         {uid === item.uid ?
                           <div>
-                            <span className="message-data-time" >10:10 AM, Today</span> &nbsp; &nbsp;
-                            <span className="message-data-name" >{this.props.profile.displayName}</span> <i class="fa fa-circle me"></i>
+                            <span className="message-data-time" >{format(new Date(item.chatTime), 'HH:mm:ss, dd/MM/yyyy')}</span> &nbsp; &nbsp;
+                            <span className="message-data-name" >{profile.display_name}</span> <i className="fa fa-circle me"></i>
                           </div>
                           :
                           <div>
                           {userChatWith && 
                             <div>
-                              <span class="message-data-name"><i class="fa fa-circle online"></i> {userChatWith.display_name}</span>
-                              <span class="message-data-time">10:12 AM, Today</span>
+                              <span className="message-data-name"><i className="fa fa-circle online"></i> {userChatWith.display_name}</span>
+                              <span className="message-data-time">{format(new Date(item.chatTime), 'HH:mm:ss, dd/MM/yyyy')}</span>
                             </div>
                           }
                           </div>

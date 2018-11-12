@@ -5,7 +5,7 @@ import {withFirestore} from 'react-redux-firebase'
 import {compose} from 'redux'
 import People from '../../components/dashboard/People'
 import _ from 'lodash'
-import {format, compareDesc} from 'date-fns/esm'
+import {compareDesc} from 'date-fns/esm'
 import { createIDChat } from '../../functions'
 import { create } from 'domain';
 
@@ -60,21 +60,68 @@ const mapStateToProps = (state) => {
 class ListPeople extends Component {
   constructor(props){
     super(props)
+    this.state = {
+      displayName: '',
+      search: []
+    }
+  }
+
+  handleSearch = (e) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      this.setState({
+        displayName: e.target.value
+      }, () => {
+        if (this.state.displayName != '') {
+          let temp = this.props.list;
+          let arr = [];
+          temp.map((e, i) => {
+            return e.display_name === this.state.displayName ? arr.push(i) : '' 
+          })
+          console.log(arr)
+          if (arr.length != 0) {
+            let result = [];
+            for (let i = 0; i < arr.length; i++)
+              result.push(temp[arr[i]])
+            this.setState({
+              search: result
+            })
+          }
+          else {
+            this.setState({
+              search: []
+            })
+          }
+        }
+      })
+    }
   }
 
   render() {
     return (
         <div className="people-list" id="people-list">
           <div className="search">
-            <input type="text" placeholder="Search"/>
-            {/* <i class="fa fa-search"></i> */}
+            <input type="text" placeholder="Search" onKeyPress={this.handleSearch}/>
+            <i className="fa fa-search"></i>
           </div>
           <ul className="list">
-            {!!this.props.list.length && this.props.list.map((item, key) => {
-              return(
-                  <People user={item} key={key}/>
-                )
-              })
+            {this.state.displayName && !!this.state.search.length ?
+              <div>
+                {this.state.search.map((item, key) => {
+                  return(
+                    <People user={item} key={key}/>
+                  )
+                })}
+              </div>
+              :
+              <div>
+              {!!this.props.list.length && this.state.displayName === '' && this.props.list.map((item, key) => {
+                return(
+                    <People user={item} key={key}/>
+                  )
+                })
+              }
+              </div>
             }
           </ul>
         </div>
