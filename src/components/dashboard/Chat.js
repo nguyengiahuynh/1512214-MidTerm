@@ -25,7 +25,6 @@ class Chat extends Component {
   handleAutoScrollDown() {
     let box = document.getElementById('box')
     box.scrollTop = box.scrollHeight - box.clientHeight;
-    alert("OKKKK")
   }
 
   componentDidMount() {
