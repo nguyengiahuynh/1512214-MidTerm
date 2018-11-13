@@ -4,11 +4,12 @@ import { connect } from 'react-redux'
 import { sendContents } from '../../store/actions/chatActions'
 import { withFirestore } from 'react-redux-firebase'
 import { infoUserChatWith} from '../../store/actions/chatActions'
-import { createIDChat } from '../../functions'
+import { createIDChat, parseImg } from '../../functions'
 import {compose} from 'redux'
 import _ from 'lodash'
 import { Redirect } from 'react-router-dom'
 import format from 'date-fns/format'
+
 
 class Chat extends Component {
 
@@ -21,10 +22,16 @@ class Chat extends Component {
     }
   }
 
+  handleAutoScrollDown() {
+    let box = document.getElementById('boxChat')
+    box.scrollTop = box.scrollHeight - box.clientHeight;
+  }
+
   componentDidMount() {
     if(this.props.match.params && this.props.match.params.id){
       let UID = this.props.match.params.id;
       this.props.infoUserChatWith(UID);
+      this.handleAutoScrollDown();
     }
   }
 
@@ -62,6 +69,8 @@ class Chat extends Component {
         contents: this.props.Chat.contents,
         content: this.state.content, 
         userChatWith: this.props.match.params.id
+      }, () => {
+        this.handleAutoScrollDown()
       })
     }
     else {
@@ -93,7 +102,7 @@ class Chat extends Component {
             }
             </div>
           {/* end chat-header */}
-          <div className="chat-history" id="box-chat">
+          <div className="chat-history" id="boxChat">
             <ul>
               {Chat.contents && Chat.contents.map((item, key) => {
                   if(!(item.content)){
@@ -119,7 +128,7 @@ class Chat extends Component {
                         }
                       </div>
                       <div className={uid === item.uid ? "message other-message float-right" : "message my-message"}>
-                        {item.content ? item.content : null}
+                        {item.content ?<p dangerouslySetInnerHTML={{ __html: parseImg(item.content)}}></p> : null}
                       </div>
                     </li>
                   )

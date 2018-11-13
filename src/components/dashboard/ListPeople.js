@@ -7,7 +7,6 @@ import People from '../../components/dashboard/People'
 import _ from 'lodash'
 import {compareDesc} from 'date-fns/esm'
 import { createIDChat } from '../../functions'
-import { create } from 'domain';
 
 const mapDispatchToProps = (dispatch) => {
   return {
@@ -69,6 +68,7 @@ class ListPeople extends Component {
   handleSearch = (e) => {
     if (e.key === 'Enter') {
       e.preventDefault();
+      console.log(e.target.value);
       this.setState({
         displayName: e.target.value
       }, () => {
@@ -76,9 +76,10 @@ class ListPeople extends Component {
           let temp = this.props.list;
           let arr = [];
           temp.map((e, i) => {
-            return e.display_name === this.state.displayName ? arr.push(i) : '' 
+            if  (e.display_name.indexOf(this.state.displayName) >= 0)
+             arr.push(i); 
           })
-          console.log(arr)
+          //console.log(arr)
           if (arr.length != 0) {
             let result = [];
             for (let i = 0; i < arr.length; i++)
