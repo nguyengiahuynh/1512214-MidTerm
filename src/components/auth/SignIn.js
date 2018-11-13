@@ -1,27 +1,13 @@
 import React, { Component } from 'react'
 import '../../css/SignIn.css'
-import firebase from "firebase";
 import { connect } from 'react-redux'
-import { signIn, loginWithGoogle } from '../../store/actions/authActions'
+import { loginWithGoogle } from '../../store/actions/authActions'
 import { Redirect } from 'react-router-dom'
 
-
-var provider = new firebase.auth.GoogleAuthProvider();
-
 class SignIn extends Component {
-    state = {
-        email: '',
-        password: ''
-    }
-    handleChange = (e) => {
-        this.setState({
-            [e.target.id]: e.target.value
-        })
-    }
 
     handleSubmit = (e) => {
         e.preventDefault();
-        this.props.signIn(this.state);
     }
 
     handleGoogleSignin = () => {
@@ -37,15 +23,15 @@ class SignIn extends Component {
                 <form id="formLogin" onSubmit={this.handleSubmit}>
                     <h5 className="grey-text text-darken-3">Sign In</h5>
                     <div className="input-field">
-                        <input type="email" id="email" className="validate" onChange={this.handleChange}/>
+                        <input type="email" id="email" className="validate" />
                         <label htmlFor="email">Email</label>
                     </div>
                     <div className="input-field">
-                        <input type="password" id="password" className="validate" onChange={this.handleChange}/>
+                        <input type="password" id="password" className="validate" />
                         <label htmlFor="password">Password</label>
                     </div>
                     <div className="input-field text-center">
-                        <button className="btn teal lighten-1 z-depth-0">Login</button>
+                        <button className="btn teal lighten-1 z-depth-0" onClick={this.handleSubmit}>Login</button>
                         <div className="red-text center">
                             {authError ? <span>Login failed!!! Wrong email or password</span> : null}
                         </div>
@@ -72,7 +58,6 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        signIn: (creds) => dispatch(signIn(creds)),
         loginWithGoogle: () => dispatch(loginWithGoogle())
     }
 }

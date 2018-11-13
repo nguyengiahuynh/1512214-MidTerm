@@ -9,9 +9,7 @@ export function createIDChat(UID_a, UID_b) {
 export function parseImg(content) {
   let arr = [];
   let result = '';
-  console.log(content);
   arr = content.split(' ')
-  console.log(arr);
   arr.map((item, key) => {
     if (isImageUrl(item)) {
       let temp =  `<a href="${item}"><img width="150" src="${item}" alt="img-chat" /></a>`;
@@ -24,6 +22,5 @@ export function parseImg(content) {
       result += item;
     }
   })
-  console.log(result)
   return result
 }

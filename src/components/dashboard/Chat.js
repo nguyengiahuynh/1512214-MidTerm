@@ -23,8 +23,9 @@ class Chat extends Component {
   }
 
   handleAutoScrollDown() {
-    let box = document.getElementById('boxChat')
+    let box = document.getElementById('box')
     box.scrollTop = box.scrollHeight - box.clientHeight;
+    alert("OKKKK")
   }
 
   componentDidMount() {
@@ -102,7 +103,7 @@ class Chat extends Component {
             }
             </div>
           {/* end chat-header */}
-          <div className="chat-history" id="boxChat">
+          <div className="chat-history" id="box">
             <ul>
               {Chat.contents && Chat.contents.map((item, key) => {
                   if(!(item.content)){
